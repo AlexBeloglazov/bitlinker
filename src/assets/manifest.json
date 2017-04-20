@@ -1,0 +1,40 @@
+{
+  "name": "bitlinker",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "author": "John Doe",
+  "description": "",
+  // "homepage_url": "",
+  "icons": {
+    "128": "icon.png"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "https://github.com/*",
+        "https://gist.github.com/*"
+      ],
+      "js": [
+        "jquery.js",
+        "app.js"
+      ],
+      // "css": [
+      //   "style.css"
+      // ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "storage",
+    "https://github.com/",
+    "https://gist.github.com/",
+    "https://githublinker.herokuapp.com/"
+  ]
+}
