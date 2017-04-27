@@ -2,8 +2,8 @@ const path = require('path');
 
 const config = {
   entry: {
-    app: './src/lib/app.js',
-    background: './src/lib/background.js'
+    app: './src/app.js',
+    background: './src/backround/background.js'
   },
   output: {
     path: path.resolve(__dirname, 'build'),

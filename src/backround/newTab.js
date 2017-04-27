@@ -1,0 +1,15 @@
+function newTab(url, index, active) {
+  chrome.tabs.create({
+    url,
+    index,
+    active,
+  });
+}
+
+export default () => {
+  chrome.runtime.onMessage.addListener(({ type, payload }, sender) => {
+    if (type !== 'newTab') return;
+    console.log('opening new tab');
+    newTab(payload.url, sender.tab.index + 1, payload.active);
+  });
+};
