@@ -16,12 +16,10 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*/*",
-        "https://github.com/*",
-        "https://gist.github.com/*"
+        "https://repo.acsu.buffalo.edu/bitbucket/*"
+        // "https://*/*",
       ],
       "js": [
-        "jquery.js",
         "app.js"
       ],
       // "css": [
@@ -35,6 +33,5 @@
     "storage",
     "https://github.com/",
     "https://gist.github.com/",
-    "https://githublinker.herokuapp.com/"
   ]
 }
