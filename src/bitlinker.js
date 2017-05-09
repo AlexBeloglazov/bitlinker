@@ -1,31 +1,33 @@
-// import PlugingManager from './plugins/manager';
+import PlugingManager from './plugins/manager';
 import CodeMirrorParser from './codemirror/parser';
-
-
 
 
 export default class BitLinker {
 	constructor() {
-		this._codeMirrorParser = new CodeMirrorParser();
-		// this._pluginManager = new PlugingManager();
+		this._parser = new CodeMirrorParser();
+		this._pluginManager = new PlugingManager();
 	}
 
 	run() {
-		this._codeMirrorParser.parse();
+		this._parser.parse();
 		
-		if (!this._codeMirrorParser.codeFound()) {
+		if (!this._parser.codeFound()) {
 			return;
 		}
 
-		if (!global.source_updated) {
-			return;
-		}
+		this._parser.parsedBlocks().forEach(function(block) {
 
-		this._codeMirrorParser.parsedBlocks().forEach(function(block) {
-			// block.lines.forEach(function(line) {
-			// 	console.log(line.text);
-			// });
+			let plugins = this._pluginManager.choose(block.URL)
+
+			if (!plugins) {
+				return;
+			}
+
+			block.lines.forEach(function(line) {
+				console.log(line.text);
+			});
 			console.log(block.lines.length);
 		});
+
 	}
 }

@@ -1,14 +1,8 @@
 
 
-
 function parseLinesFrom(element) {
 	let lines = [].slice.call(element.childNodes);
 	
-	if (lines.length > global.source_lines) {
-		global.source_lines = lines.length;
-		global.source_updated = true;
-	}
-
 	return lines.map(function(line) {
 		let lineGroup = line.querySelector('.CodeMirror-line > span');
 		let lineText = lineGroup.innerText.trim();
@@ -58,7 +52,7 @@ export default class CodeMirrorParser {
 			return;
 		}
 
-		// Map all previously found HTML elements to CodeBlock objects
+		// Map all found HTML elements to CodeBlock objects
 		this._codeBlocks = elements.map(element => new CodeBlock(element));
 	}
 
