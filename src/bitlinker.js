@@ -1,6 +1,6 @@
 import PlugingManager from './plugins/manager';
 import CodeMirrorParser from './codemirror/parser';
-import findMatchedGroup from './codemirror/group-finder';
+import * as codeMirrorHelpers from './codemirror/helpers';
 
 
 export default class BitLinker {
@@ -29,11 +29,15 @@ export default class BitLinker {
 			plugins.forEach((plugin) => {
 				[].concat(plugin.lineRegexes).forEach((regex) => {
 					if (!regex instanceof RegExp) {
-						throw new Error('targetRegexes should return either list or single regular expression');
+						throw new Error('lineRegexes should return either list or single regular expression');
 					}
-					block.lines.filter(line => regex.test(line.text)).forEach((line) => {
-						console.log(findMatchedGroup(line.text.match(regex)[1], line.group));
-					});
+					for(var line of block.lines) {
+						let match;
+						if (!(match = line.text.match(regex))) {
+							continue;
+						}
+						codeMirrorHelpers.substituteWithLink(line.group, match[1], plugin);
+					}
 				});
 			});
 		});

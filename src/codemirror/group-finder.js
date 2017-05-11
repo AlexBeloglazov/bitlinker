@@ -11,10 +11,10 @@ function findMatchedGroup(matched, lineGroup) {
         out.push(lineElement);
         concatenated += lineElement.innerText;
         if (concatenated === matched) {
-            return out;
+            break;
         }
     }
-    return [];
+    return out;
 }
 
 export default findMatchedGroup;
