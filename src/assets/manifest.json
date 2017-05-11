@@ -16,8 +16,9 @@
   "content_scripts": [
     {
       "matches": [
-        "https://repo.acsu.buffalo.edu/bitbucket/*"
-        // "https://*/*",
+        "https://repo.acsu.buffalo.edu/bitbucket/*",
+        "https://*/*",
+        "http://*/*"
       ],
       "js": [
         "app.js"

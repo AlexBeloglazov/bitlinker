@@ -2,7 +2,7 @@
 
 function parseLinesFrom(element) {
 	let lines = [].slice.call(element.childNodes);
-	
+
 	return lines.map(function(line) {
 		let lineGroup = line.querySelector('.CodeMirror-line > span');
 		let lineText = lineGroup.innerText.trim();
@@ -15,7 +15,7 @@ function parseLinesFrom(element) {
 		return {
 			"group": lineGroup,
 			"text": lineText
-		}
+		};
 	});
 }
 
@@ -27,7 +27,7 @@ class CodeBlock {
 
 		// Absolute URL of a document the source code belongs to
 		try {
-			this.URL = element.closest('.file-content').querySelector('.mode-source')['href'].match(/[^?]+/ig)[0]
+			this.URL = element.closest('.file-content').querySelector('.mode-source')['href'].match(/[^?]+/ig)[0];
 		}
 		catch(err) {
 			this.URL = "";
@@ -35,7 +35,7 @@ class CodeBlock {
 
 		// Parse the source code lines
 		if (this.URL) {
-			this.lines = parseLinesFrom(element).filter(line => !!line.text);			
+			this.lines = parseLinesFrom(element).filter(line => !!line.text);
 		}
 	}
 }
@@ -49,17 +49,13 @@ export default class CodeMirrorParser {
 		// Find all HTML elements in the current document which contain source code
 		let elements = [].slice.call(document.getElementsByClassName('CodeMirror-code'));
 		if (!elements.length) {
-			return;
+			return false;
 		}
-
 		// Map all found HTML elements to CodeBlock objects
 		this._codeBlocks = elements.map(element => new CodeBlock(element));
-	}
-
-	codeFound() {
 		return !!this._codeBlocks;
 	}
-
+	
 	parsedBlocks() {
 		return this._codeBlocks;
 	}

@@ -22,22 +22,16 @@ var observerConfig = {
 
 window_object._source_lines = 0;
 
-
 var watcher = new window_object.MutationObserver(function (mutations) {
-	
 	// fire callback if more source code lines appeared on the webpage
 	if (container.children.length > window_object._source_lines) {
 		window_object._source_lines = container.children.length;
 		callback(null);
 	}
-		
 });
-
 watcher.observe(container, observerConfig);
 
-// callback(null);
-
+callback(null);
 };
-
 
 module.exports = injection;
