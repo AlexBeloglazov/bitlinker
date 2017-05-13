@@ -32,8 +32,8 @@ export default class BitLinker {
 						throw new Error('lineRegexes should return either list or single regular expression');
 					}
 					for(var line of block.lines) {
-						let match;
-						if (!(match = line.text.match(regex))) {
+						let match = line.text.match(regex);
+						if (!match) {
 							continue;
 						}
 						codeMirrorHelpers.substituteWithLink(line.group, match[1], plugin);

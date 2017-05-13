@@ -1,12 +1,12 @@
 import config from '../config';
 
 
-function clickHandler(plugin, match) {
-
+function clickHandler(plugin, match, ev) {
+console.log(e);
     chrome.runtime.sendMessage({
       type: 'newTab',
       payload: {
-        url: "https://www.google.com/search?q="+match,
+        url: plugin.resolve(match),
         active: true,
       },
     });

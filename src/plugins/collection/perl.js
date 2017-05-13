@@ -1,6 +1,6 @@
 
-function resolve() {
-    return "#";
+function resolve(match) {
+    return "https://www.google.com/search?q="+match;
 };
 
 export default {

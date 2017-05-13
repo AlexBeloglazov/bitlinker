@@ -1,5 +1,4 @@
 
-
 function injection (window_object, callback) {
 
 	if (!window_object || !window_object.document || !window_object.document.querySelector) {
@@ -13,7 +12,7 @@ function injection (window_object, callback) {
 	var container = window_object.document.querySelector('section.aui-page-panel-content');
 
 	if (!container) {
-		console.log("Watcher main container not found!");
+		console.log("watcher: main container not found!");
 		return;
 	}
 
@@ -34,9 +33,13 @@ function injection (window_object, callback) {
 
 		new window_object.MutationObserver(function(mutations) {
 			console.log('fired');
-			callback(null);
+			callback();
 		}).observe(codeMirror, {childList: true, subtree: true, attributes:true});
+
+		callback();
 	}
+
+	_codeMirrorInjection(null);
 };
 
 
