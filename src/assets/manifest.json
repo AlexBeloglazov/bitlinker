@@ -1,8 +1,8 @@
 {
   "name": "bitlinker",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "manifest_version": 2,
-  "author": "John Doe",
+  "author": "Alexander Beloglazov",
   "description": "",
   // "homepage_url": "",
   "icons": {
@@ -31,8 +31,7 @@
     }
   ],
   "permissions": [
-    "storage",
     "https://github.com/",
-    "https://gist.github.com/",
+    "https://gist.github.com/"
   ]
 }

@@ -6,7 +6,8 @@
   },
   "main": "lib/app.js",
   "scripts": {
-    "webpack": "./node_modules/webpack/bin/webpack.js"
+    "webpack": "./node_modules/webpack/bin/webpack.js",
+    "webpack-watch": "./node_modules/webpack/bin/webpack.js --watch"
   },
   "dependencies": {
     "concat-map": "^0.0.1",
