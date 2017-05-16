@@ -14,7 +14,8 @@
     "core-js": "^2.4.1",
     "escape-regex-string": "^1.0.4",
     "path-parse": "^1.0.5",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "url-join": "^2.0.1"
   },
   "babel": {
     "plugins": [

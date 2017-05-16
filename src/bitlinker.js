@@ -36,7 +36,13 @@ export default class BitLinker {
 						if (!match) {
 							continue;
 						}
-						codeMirrorHelpers.substituteWithLink(line.group, match[1], plugin);
+
+						codeMirrorHelpers.substituteWithLink({
+							group: line.group,
+							match: match[1],
+							plugin: plugin,
+							blockOrigin: block.parseBlockURL()
+						});
 					}
 				});
 			});
