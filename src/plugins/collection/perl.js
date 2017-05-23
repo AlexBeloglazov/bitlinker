@@ -1,61 +1,49 @@
 import urljoin from 'url-join';
+import network from '../../utils/network';
 
-const SERVER_API_EP = 'rest/api/1.0';
 const PAGINATION_LIMIT = 1000; // limit on file listing
 
-//-----------------------------------------------------------------------------
-// Helper method
 
-function sendRequest(url) {
-	let request = new XMLHttpRequest();
-	request.open('GET', url, false);
-	request.send(null);
-
-	return (request.status === 200) ? JSON.parse(request.responseText) : {};
-}
-
-//-----------------------------------------------------------------------------
-
-
-
-function resolve(args) {
+async function resolve(args) {
 
 	let links = [];
 	
+	let r = await network.sendRequest('GET', 'https://repo.acsu.buffalo.edu/bitbucket', true);
+
 	// we must have 'repos' key
-	if (args.blockOrigin.repos) {
+	if (args.block.origin.repos) {
 		
 		let matchPackage = args.match.split('::')[0];
 		let matchFile = new RegExp(args.match.replace('::', '/') + '(.pm$|.pl$)', 'i');
 
-		let api = urljoin(args.bitbucketServerURL, SERVER_API_EP);
+		let api = urljoin(args.config.BITBUCKET_SERVER_URL, args.config.SERVER_API_EP);
 		
 		// we need to have 'projects' key in order to make api call to the server
-		if (!args.blockOrigin.projects) {
-			args.blockOrigin.projects = `~${args.blockOrigin.users}`;
+		if (!args.block.origin.projects) {
+			args.block.origin.projects = `~${args.block.origin.users}`;
 		}
 
-		let browseURL = args.blockOrigin.url.match(/(.*\/browse)/)[1];
-		let response;
-		let requestUrl = urljoin(
-			api,
-			`projects/${args.blockOrigin.projects}/repos/${args.blockOrigin.repos}/files?limit=${PAGINATION_LIMIT}`
+		let browseURL = args.block.url.match(/(.*\/browse)/)[1];
+
+		let response = await network.sendRequest(
+			'GET',
+			urljoin(api,`projects/${args.block.origin.projects}/repos/${args.block.origin.repos}/files?limit=${PAGINATION_LIMIT}`),
+			true
 		);
 
 		// looking through the files of the current repository
-		for(let filePath of (sendRequest(requestUrl).values || [])) {
+		for(let filePath of (response.values || [])) {
 			if (filePath.match(matchFile)) {
 				links.push(urljoin(browseURL, filePath));
-				return links;
+				break;
 			}
 		}
-
-		// TODO find package
 
 	};
 
     return links;
 };
+
 
 export default {
   name: 'Perl',

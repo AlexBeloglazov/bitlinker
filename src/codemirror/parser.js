@@ -37,23 +37,15 @@ class CodeBlock {
 		if (this.URL) {
 			this.lines = parseLinesFrom(element).filter(line => !!line.text);
 		}
-	}
 
-	// returns object with user name, repo name and project name extracted from this.URL
-	parseBlockURL() {
-		let keys = ['projects', 'users', 'repos'];
-		let out = {};
+		this.origin = {};
 
-		for(let key of keys) {
+		// Parse user name, repo name and project name from this.URL and store in this.origin
+		for(let key of ['projects', 'users', 'repos']) {
 			let match = this.URL.match(`\/${key}\/([^\/]+)`);
-			out[key] = (match) ? match[1] : null;
+			this.origin[key] = (match) ? match[1] : null;
 		}
-
-		out.url = this.URL;
-
-		return out;
 	}
-
 }
 
 export default class CodeMirrorParser {

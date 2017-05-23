@@ -1,12 +1,14 @@
 
-function clickHandler(plugin, args, ev) {
+function clickHandler(plugin, resolveArgs, ev) {
 
-	let links = plugin.resolve(args) || [];
+	// set Google search as fallback if resolver returns nothing
+	let links = plugin.resolve(resolveArgs);
+		// [`https://www.google.com/search?q=${resolveArgs.match}`];
 
     chrome.runtime.sendMessage({
       type: 'newTab',
       payload: {
-        url: (!!links.length) ? links[0] : `https://www.google.com/search?q=${args.match}`,
+        url: links[0],
         active: true,
       },
     });
