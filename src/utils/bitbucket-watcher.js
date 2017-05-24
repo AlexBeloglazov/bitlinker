@@ -17,7 +17,7 @@ function injection (window_object, callback) {
 		return;
 	}
 
-	let mainObserver = new window_object.MutationObserver(() => {console.log("cb fired"); callback()});
+	let mainObserver = new window_object.MutationObserver(() => {console.log("cb fired"); callback();});
 	let observerConfig = {
 		childList: true,
 		subtree: true,

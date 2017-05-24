@@ -22,7 +22,7 @@ function _findMatchGroup(lineGroup, match) {
         if (groupText.match(match)) {
             return {
                 group: matchGroup,
-                text: groupText                
+                text: groupText
             };
         }
     }
@@ -30,7 +30,6 @@ function _findMatchGroup(lineGroup, match) {
 
 
 function replaceWithLink(group, match) {
-
     let matchGroup = _findMatchGroup(group, match);
 
     // this should never happen

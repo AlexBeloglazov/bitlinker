@@ -1,9 +1,12 @@
 
-function clickHandler(plugin, resolveArgs, ev) {
+async function clickHandler(plugin, resolveArgs, ev) {
 
 	// set Google search as fallback if resolver returns nothing
-	let links = plugin.resolve(resolveArgs);
-		// [`https://www.google.com/search?q=${resolveArgs.match}`];
+	console.log('before resolve');
+	let links = await plugin.resolve(resolveArgs);
+	console.log('after resolve');
+	links.push(`https://www.google.com/search?q=${resolveArgs.match}`);
+	console.log(links);
 
     chrome.runtime.sendMessage({
       type: 'newTab',
