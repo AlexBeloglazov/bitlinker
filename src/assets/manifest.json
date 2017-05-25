@@ -32,7 +32,6 @@
     }
   ],
   "permissions": [
-      "storage",
-      "http://search.cpan.org/*"
+    "storage"
   ]
 }

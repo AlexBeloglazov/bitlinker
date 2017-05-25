@@ -1,3 +1,6 @@
-import newTab from './newTab';
+import listeners from './listeners';
 
-newTab();
+listeners.newTabListener();
+listeners.corsListener();
+
+chrome.storage.local.set({test: 'passed'}, () => {console.log('saved!');});

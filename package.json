@@ -10,6 +10,7 @@
     "webpack-watch": "./node_modules/webpack/bin/webpack.js --watch"
   },
   "dependencies": {
+    "chrome-promise": "^2.0.3",
     "concat-map": "^0.0.1",
     "core-js": "^2.4.1",
     "escape-regex-string": "^1.0.4",

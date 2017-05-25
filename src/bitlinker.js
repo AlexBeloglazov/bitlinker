@@ -20,7 +20,7 @@ export default class BitLinker {
 			return;
 		}
 
-		this._parser.parsedBlocks().forEach((block) => {
+		this._parser.parsedBlocks().forEach(block => {
 
 			// get list of all plugins which able to handle a file under given URL
 			let plugins = linker._pluginManager.choose(block.URL);
@@ -29,7 +29,7 @@ export default class BitLinker {
 			}
 
 			plugins.forEach((plugin) => {
-				[].concat(plugin.lineRegexes).forEach((regex) => {
+				[].concat(plugin.lineRegexes).forEach(regex => {
 					if (!regex instanceof RegExp) {
 						throw new Error('lineRegexes should return either list or single regular expression');
 					}

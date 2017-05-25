@@ -1,5 +1,6 @@
 import urljoin from 'url-join';
-import network from '../../utils/network';
+import * as network from '../../utils/network';
+import storage from '../../utils/storage';
 
 const PAGINATION_LIMIT = 1000; // limit on file listing
 
@@ -20,7 +21,7 @@ async function resolve(args) {
 		if (!args.block.origin.projects) {
 			args.block.origin.projects = `~${args.block.origin.users}`;
 		}
-
+console.log(storage.get());
 		//---------------------------------------------------------------------------
 		// API calls
 		//---------------------------------------------------------------------------
@@ -29,9 +30,10 @@ async function resolve(args) {
 		let response = await network.sendRequest(
 			'GET',
 			urljoin(api,`projects/${args.block.origin.projects}/repos/${args.block.origin.repos}/files?limit=${PAGINATION_LIMIT}`),
-			100,
+			300,
 			true
 		);
+		// console.log('module: ', response);
 		(response.values || []).some(filePath => {
 			if (filePath.match(matchFile)) {
 				return links.push(urljoin(args.block.url.match(/(.*\/browse)/)[1], filePath));
@@ -43,20 +45,22 @@ async function resolve(args) {
 		response = await network.sendRequest(
 			'GET',
 			urljoin(api, `repos?name=${matchPackage}&limit=${PAGINATION_LIMIT}`),
-			100,
+			300,
 			true
 		);
+		// console.log('package: ', response);
 		(response.values || []).some(repository => {
-			if (repository.public && repositry.links) {
+			if (repository.links) {
 				return (repository.links.self || []).forEach(link => { links.push(link.href); });
 			}
 		});
 		if (links.length) return links;
 
 		// if still nothing has been found then query CPAN
-		response = await network.sendRequest(
+		response = await network.corsRequest(
 			'GET',
-			`http://search.cpan.org/search?mode=module&format=xml&query=${matchPackage}`
+			`http://search.cpan.org/search?mode=module&format=xml&query=${matchPackage}`,
+			1000
 		);
 		try {
 			let parser = new window.DOMParser();

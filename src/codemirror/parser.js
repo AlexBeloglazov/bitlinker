@@ -3,7 +3,7 @@
 function parseLinesFrom(element) {
 	let lines = [].slice.call(element.childNodes);
 
-	return lines.map(function(line) {
+	return lines.map(line => {
 		let lineGroup = line.querySelector('.CodeMirror-line > span');
 		let lineText = lineGroup.innerText.trim();
 
