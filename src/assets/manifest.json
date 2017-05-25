@@ -1,10 +1,9 @@
 {
   "name": "bitlinker",
-  "version": "0.0.8",
+  "version": "0.1",
   "manifest_version": 2,
   "author": "Alexander Beloglazov",
-  "description": "",
-  // "homepage_url": "",
+  "description": "OctoLinker-like extension for BitBucket Server",
   "icons": {
     "128": "icon.png"
   },
@@ -13,6 +12,7 @@
       "background.js"
     ]
   },
+  "options_page": "options.html",
   "content_scripts": [
     {
       "matches": [
@@ -32,7 +32,7 @@
     }
   ],
   "permissions": [
-    "https://github.com/",
-    "https://gist.github.com/"
+      "storage",
+      "http://search.cpan.org/*"
   ]
 }

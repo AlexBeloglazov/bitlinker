@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>BitLinker Options</title>
+    </head>
+    <body>
+        <style media="screen">
+            body, hr {
+                color: rgb(69, 69, 69);
+            }
+            table {
+                margin: 30px 0px 30px 0px;
+            }
+            table, tr {
+                border: none;
+            }
+            td {
+                padding: 0px 10px 10px 0px;
+            }
+        </style>
+        
+        <h1>BitLinker Options</h1>
+        <hr>
+        <table>
+            <tr>
+                <td><label for="server"><strong>BitBucket Server URL:</strong></label></td>
+                <td><input type="url" id="server" size="60" placeholder="Example: http[s]://www.myserver.com/bitbucket"></td>
+            </tr>
+            <tr>
+                <td><label for="api"><strong>BitBucket Server API 1.0 Entry Point:</strong></label></td>
+                <td><input type="text" id="api" size="60" placeholder="Example: rest/api/1.0"></td>
+            </tr>
+        </table>
+
+        <button type="submit" id="save">Save</button>
+
+        <script type="text/javascript" src="options.js"></script>
+
+    </body>
+</html>

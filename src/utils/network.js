@@ -6,7 +6,6 @@ function sendRequest(method, url, timeout, toJSON) {
 		request.open(method, url);
 		request.timeout = timeout || 300;
 		request.onreadystatechange = () => {
-			console.log('state: ', request.readyState, '  status: ', request.status);
 			if (request.readyState === 4) {
 				let response;
 				try {

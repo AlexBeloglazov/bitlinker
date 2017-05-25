@@ -4,7 +4,8 @@ const copywp = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         app: './src/app.js',
-        background: './src/backround/background.js'
+        background: './src/backround/background.js',
+        options: './src/options/options.js'
     },
     output: {
         path: path.resolve(__dirname, 'build'),

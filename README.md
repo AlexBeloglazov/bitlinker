@@ -1,6 +1,6 @@
 # README #
 
-Octolinker for BitBucket Server
+Octolinker-like Chrome extension for BitBucket Server
 
 ### How do I get set up? ###
 
