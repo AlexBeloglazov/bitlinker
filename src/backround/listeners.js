@@ -27,4 +27,4 @@ function corsListener() {
 export default {
 	newTabListener,
 	corsListener
-}
+};

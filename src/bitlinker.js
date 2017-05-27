@@ -2,7 +2,6 @@ import PlugingManager from './plugins/manager';
 import CodeMirrorParser from './codemirror/parser';
 import clickHandler from './utils/click-handler';
 import linkSwapper from './utils/link-swapper';
-import config from './config';
 
 
 export default class BitLinker {
@@ -47,9 +46,8 @@ export default class BitLinker {
 						if (!link) {
 							continue;
 						}
-						
+
 						let resolveArgs = {
-							config: config,
 							match: match[1],
 							block: {
 								url: block.URL,

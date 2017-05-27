@@ -15,13 +15,13 @@ async function resolve(args) {
 		let matchPackage = args.match.split('::')[0];
 		let matchFile = new RegExp(args.match.replace('::', '/') + '(.pm$|.pl$)', 'i');
 
-		let api = urljoin(args.config.BITBUCKET_SERVER_URL, args.config.SERVER_API_EP);
+		let api = urljoin(storage.get('bitlinker.server_url'), storage.get('bitlinker.api_ep'));
 
 		// we need to have 'projects' key in order to make api call to the server
 		if (!args.block.origin.projects) {
 			args.block.origin.projects = `~${args.block.origin.users}`;
 		}
-console.log(storage.get());
+
 		//---------------------------------------------------------------------------
 		// API calls
 		//---------------------------------------------------------------------------

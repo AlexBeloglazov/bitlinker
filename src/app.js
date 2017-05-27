@@ -3,8 +3,11 @@ import watcher from './utils/bitbucket-watcher';
 import storage from './utils/storage';
 
 
-const bitlinker = new BitLinker();
+storage.load().then(() => {
+    if (!window.location.href.match(storage.get('bitlinker.server_url'))) {
+        return;
+    }
 
-watcher(window, bitlinker.run.bind(bitlinker, null));
-
-let s = storage.get('test').then(s => {console.log(s)});
+    const bitlinker = new BitLinker();
+    watcher(window, bitlinker.run.bind(bitlinker, null));
+});

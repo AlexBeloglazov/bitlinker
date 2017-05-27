@@ -1,9 +1,26 @@
 
 let saveButton = document.getElementById('save');
-let server = document.getElementById('server');
-let api = document.getElementById('api');
+
+let fields = {
+    'bitlinker.server_url': 'server',
+    'bitlinker.api_ep': 'api'
+};
+
+chrome.storage.local.get(Object.keys(fields), (items) => {
+    Object.entries(fields).forEach(([key, id]) => {
+        document.getElementById(id).value = items[key] || '';
+    });
+});
 
 saveButton.onclick = () => {
-    saveButton.innerHTML = 'Saved!';
-    setTimeout(() => { saveButton.innerHTML = 'Save'; }, 2000);
+    chrome.storage.local.set(
+        Object.entries(fields).reduce((obj, [key, id]) => {
+            obj[key] = document.getElementById(id).value;
+            return obj;
+        }, {}),
+        () => {
+            saveButton.innerHTML = 'Saved!';
+            setTimeout(() => { saveButton.innerHTML = 'Save'; }, 800);
+        }
+    );
 };

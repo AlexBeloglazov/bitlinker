@@ -1,31 +1,21 @@
 
+let storage = {};
+
 
 export default {
-    get: (keys) => {
-	    let promise = new Promise((resolve, reject) => {
-	        chrome.storage.local.get(keys, (items) => {
-	            let err = chrome.runtime.lastError;
-	            if (err) {
-	                reject(err);
-	            } else {
-	                resolve(items);
-	            }
-	        });
-	    });
-    return promise;
-    },
-
-    set: (items) => {
-        let promise = new Promise((resolve, reject) => {
-            chrome.storage.local.set(items, () => {
-                let err = chrome.runtime.lastError;
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
+    load: () => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get(null, items => {
+                Object.assign(storage, items);
+                resolve();
             });
         });
-    	return promise;
+    },
+
+    get: (key) => {
+        if (!storage[key]) {
+            throw new Error(`${key} is not set/found in Local Storage`);
+        }
+        return storage[key];
     }
-}
+};
