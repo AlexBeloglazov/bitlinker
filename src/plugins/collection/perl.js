@@ -85,7 +85,7 @@ export default {
 
   pathPatterns: ['.pm$', '.pl$'],
 
-  lineRegexes: /^(?:use|require)\s([^\s|^\;]+)/,
+  lineRegexes: /^(?:use|require)\s+([^\s|^\;]+)/,
 
   resolve: resolve
 };
