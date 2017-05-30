@@ -45,13 +45,13 @@ async function resolve(args) {
 			// query CPAN
 			network.corsRequest(
 				'GET',
-				`http://search.cpan.org/search?mode=module&format=xml&query=${matchPackage}`,
+				`https://fastapi.metacpan.org/v1/pod/${args.match}`,
 				1500
 			)
 		];
 
 		// call all APIs in parallel
-		let [files, repos, cpan_xml] = await Promise.all(p);
+		let [files, repos, metacpan] = await Promise.all(p);
 
 		(files.values || []).some(filePath => {
 			if (filePath.match(matchFile)) {
@@ -66,13 +66,10 @@ async function resolve(args) {
 			}
 		});
 		if (links.length) return links;
-
-		try {
-			let parser = new window.DOMParser();
-			let xmlResponse = parser.parseFromString(cpan_xml, 'text/xml');
-			links.push(xmlResponse.getElementsByTagName('link')[0].childNodes[0].nodeValue);
+		
+		if (metacpan) {
+			links.push(`https://metacpan.org/pod/${args.match}`);
 		}
-		catch (err) {}
 
 	};
 
