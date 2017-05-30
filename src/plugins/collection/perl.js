@@ -2,7 +2,7 @@ import urljoin from 'url-join';
 import * as network from '../../utils/network';
 import storage from '../../utils/storage';
 
-const PAGINATION_LIMIT = 1000; // limit on file listing
+const PAGINATION_LIMIT = 1000; // limit on listing size from server
 
 // This function is getting called every time when user clicks on BitLinker link which
 // is associated with current plugin
@@ -15,6 +15,7 @@ async function resolve(args) {
 		let matchPackage = args.match.split('::')[0];
 		let matchFile = new RegExp(args.match.replace('::', '/') + '(.pm$|.pl$)', 'i');
 
+		// getting URL path to Bitbucket API from storage (saved settings)
 		let api = urljoin(storage.get('bitlinker.server_url'), storage.get('bitlinker.api_ep'));
 
 		// we need to have 'projects' key in order to make api call to the server
@@ -48,7 +49,6 @@ async function resolve(args) {
 			300,
 			true
 		);
-		// console.log('package: ', response);
 		(response.values || []).some(repository => {
 			if (repository.links) {
 				return (repository.links.self || []).forEach(link => { links.push(link.href); });

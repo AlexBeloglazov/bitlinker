@@ -1,11 +1,11 @@
 
 
-// returns group of SPAN elements (words in line) which should be turned into a link
+// returns group of SPAN nodes (words in line) which should be turned into a link
 function _findMatchGroup(lineGroup, match) {
     let matchGroup = [];
     let groupText = "";
     for(var node of lineGroup.childNodes) {
-        // check if the group is already has been swapped with link
+        // check if the group has been already swapped with link
         if (node.nodeName.match(/^a$/i) && node.classList.contains('bitlinker-link')) {
             return node;
         }
@@ -42,12 +42,15 @@ function replaceWithLink(group, match) {
         return;
     }
 
+    // creating bitlinker link
     let link = document.createElement('a');
     link.innerHTML = matchGroup.text;
     link.className = matchGroup.group[0].className;
     link.classList.add('bitlinker-link');
 
+    // substitute the group of SPAN nodes with the link
     matchGroup.group[0].replaceWith(link);
+    // remove all the nodes in the froup from webpage
     matchGroup.group.forEach(node => node.remove());
 
     return link;
