@@ -1,8 +1,35 @@
 .bitlinker-link {
   cursor: pointer;
   text-decoration: underline !important;
+  position: relative;
 }
 
 .bitlinker-link:hover {
   text-decoration: underline !important;
+}
+
+.bitlinker-link .bitlinker-tooltip {
+	font-family: 'arial';
+    background-color: black;
+    opacity: 0.8;
+    color: #d3d3d3;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 120%;
+    transition: opacity 1s;
+}
+
+.bitlinker-link .bitlinker-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
 }

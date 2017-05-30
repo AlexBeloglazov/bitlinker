@@ -10,6 +10,6 @@ storage.load().then(() => {
     }
 
     const bitlinker = new BitLinker();
-    // run bitlinker every time when there are changes on the page
+    // run bitlinker every time when there are changes in the code section
     watcher(window, bitlinker.run.bind(bitlinker, null));
 });
