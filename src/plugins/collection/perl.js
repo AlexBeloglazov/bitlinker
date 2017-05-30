@@ -13,7 +13,7 @@ async function resolve(args) {
 	if (args.block.origin.repos) {
 
 		let matchPackage = args.match.split('::')[0];
-		let matchFile = new RegExp(args.match.replace('::', '/') + '(.pm$|.pl$)', 'i');
+		let matchFile = new RegExp(args.match.replace(/:{2}/g, '/') + '(.pm$|.pl$)', 'i');
 
 		// getting URL path to Bitbucket API from storage (saved settings)
 		let api = urljoin(storage.get('bitlinker.server_url'), storage.get('bitlinker.api_ep'));
@@ -27,44 +27,49 @@ async function resolve(args) {
 		// API calls
 		//---------------------------------------------------------------------------
 
-		// looking through files of the current repository
-		let response = await network.sendRequest(
-			'GET',
-			urljoin(api,`projects/${args.block.origin.projects}/repos/${args.block.origin.repos}/files?limit=${PAGINATION_LIMIT}`),
-			300,
-			true
-		);
-		// console.log('module: ', response);
-		(response.values || []).some(filePath => {
+		let p = [
+			// look through files of the current repository
+			network.sendRequest(
+				'GET',
+				urljoin(api,`projects/${args.block.origin.projects}/repos/${args.block.origin.repos}/files?limit=${PAGINATION_LIMIT}`),
+				null,
+				true
+			),
+			// look through all repositories to find a matchPackage
+			network.sendRequest(
+				'GET',
+				urljoin(api, `repos?name=${matchPackage}&limit=${PAGINATION_LIMIT}`),
+				null,
+				true
+			),
+			// query CPAN
+			network.corsRequest(
+				'GET',
+				`http://search.cpan.org/search?mode=module&format=xml&query=${matchPackage}`,
+				1500
+			)
+		];
+
+		// call all APIs in parallel
+		let [files, repos, cpan_xml] = await Promise.all(p);
+
+		(files.values || []).some(filePath => {
 			if (filePath.match(matchFile)) {
 				return links.push(urljoin(args.block.url.match(/(.*\/browse)/)[1], filePath));
 			}
 		});
 		if (links.length) return links;
 
-		// looking through all repositories to find a matchPackage
-		response = await network.sendRequest(
-			'GET',
-			urljoin(api, `repos?name=${matchPackage}&limit=${PAGINATION_LIMIT}`),
-			300,
-			true
-		);
-		(response.values || []).some(repository => {
+		(repos.values || []).some(repository => {
 			if (repository.links) {
 				return (repository.links.self || []).forEach(link => { links.push(link.href); });
 			}
 		});
 		if (links.length) return links;
 
-		// if still nothing has been found then query CPAN
-		response = await network.corsRequest(
-			'GET',
-			`http://search.cpan.org/search?mode=module&format=xml&query=${matchPackage}`,
-			1000
-		);
 		try {
 			let parser = new window.DOMParser();
-			let xmlResponse = parser.parseFromString(response, 'text/xml');
+			let xmlResponse = parser.parseFromString(cpan_xml, 'text/xml');
 			links.push(xmlResponse.getElementsByTagName('link')[0].childNodes[0].nodeValue);
 		}
 		catch (err) {}
