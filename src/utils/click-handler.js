@@ -8,6 +8,8 @@ function showTooltip(target, message) {
 		event.target.remove();
 	};
 	target.append(tooltip);
+	tooltip.offsetHeight; // get side effect to make the layout engine to stop
+	tooltip.style.opacity = 0.8;
 	setTimeout(() => {tooltip.remove();}, 2000);
 }
 

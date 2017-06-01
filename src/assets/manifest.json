@@ -17,8 +17,7 @@
     {
       "matches": [
         "https://*/*",
-        "http://*/*",
-        "file://*/*"
+        "http://*/*"
       ],
       "js": [
         "app.js"

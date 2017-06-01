@@ -56,7 +56,6 @@ export default class BitLinker {
 						};
 
 						link.addEventListener('click', clickHandler.bind(null, plugin, resolveArgs));
-
 					}
 				});
 			});
