@@ -13,11 +13,13 @@ function injection (window_object, callback) {
 	let container = window_object.document.querySelector('section.aui-page-panel-content');
 
 	if (!container) {
-		console.log("watcher: main container not found!");
 		return;
 	}
 
-	let mainObserver = new window_object.MutationObserver(() => {console.log("cb fired"); callback();});
+	let mainObserver = new window_object.MutationObserver(() => {
+		callback();
+	});
+	
 	let observerConfig = {
 		childList: true,
 		subtree: true,

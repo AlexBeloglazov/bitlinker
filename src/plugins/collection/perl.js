@@ -67,7 +67,7 @@ async function resolve(args) {
 		});
 		if (links.length) return links;
 		
-		if (metacpan) {
+		if ((metacpan || '').trim()) {
 			links.push(`https://metacpan.org/pod/${args.match}`);
 		}
 

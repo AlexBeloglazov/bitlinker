@@ -1,3 +1,5 @@
+import storage from './storage';
+
 
 function showTooltip(target, message) {
 	let tooltip = document.createElement('div');
@@ -30,6 +32,7 @@ async function clickHandler(plugin, resolveArgs, ev) {
       payload: {
         url: links[0],
         active: true,
+        sameTab: storage.get('bitlinker.open_in_sametab')
       },
     });
 

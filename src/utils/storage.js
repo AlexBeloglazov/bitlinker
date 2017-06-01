@@ -13,7 +13,7 @@ export default {
     },
 
     get: (key) => {
-        if (!storage[key]) {
+        if (!storage.hasOwnProperty(key)) {
             throw new Error(`${key} is not set/found in Local Storage`);
         }
         return storage[key];
